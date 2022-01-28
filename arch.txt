@@ -1,0 +1,2 @@
+# Architechtures available are listed here: https://github.com/dockcross/dockcross
+linux-x64
