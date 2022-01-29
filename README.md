@@ -9,7 +9,7 @@
 
 ## Usage
 - Edit arch.txt to include the architechtures that you want.
-    - Available architechtures: https://github.com/dockcross/dockcross
+    - Available architechtures: https://github.com/dockcross/dockcross#summary-cross-compilers
 - `chmod +x crossCompile.sh`
 - `./crossCompile.sh`
 
