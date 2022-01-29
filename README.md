@@ -1,6 +1,6 @@
 # docker-CrossCompile
 
-## Pre-requisits
+## Prerequisites
 - Windows
     - [Docker](https://docs.docker.com/desktop/windows/install/)
     - [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install)
@@ -18,7 +18,6 @@
 - [x] Add instructions
 - [x] Add pre-reqs
 - [ ] Allow arguments to be changed
-- [ ] tbd
 
 ## Technology used
 - [Docker](https://www.docker.com/)
