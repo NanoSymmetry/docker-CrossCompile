@@ -19,3 +19,7 @@
 - [x] Add pre-reqs
 - [ ] Allow arguments to be changed
 - [ ] tbd
+
+## Technology used
+- [Docker](https://www.docker.com/)
+- [dockcross](https://github.com/dockcross/dockcross)
