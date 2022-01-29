@@ -1,0 +1,7 @@
+# Ignore 
+src/
+crossCompilers/
+
+# Ignore build 
+a.out
+*.bin
