@@ -3,3 +3,4 @@ win64
 linux
 osxAArch64
 osx64
+armv5
