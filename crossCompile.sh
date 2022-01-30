@@ -28,7 +28,8 @@ grep -v '^#' arch.txt | while read -r line; do
             CXX="c++";;
     esac
 
-    $compileFlags="-O2 -lpthread -lm"
+    # Set compiles
+    compileFlags="-O2 -lpthread -lm "$@
 
     echo "Compiling for $line"
     docker run --rm -v $(pwd):/workdir -e CROSS_TRIPLE=$line nyancattw1/crossbuild $CXX src/main.cpp src/cubiomes/*.c $staticFlags $compileFlags -o out/main.$line
