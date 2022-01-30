@@ -10,6 +10,7 @@ grep -v '^#' arch.txt | while read -r line; do
     # Sanitize input by only allowing alpha-numeric charachters
     line=${line//[^a-zA-Z0-9-]/}
 
+    # Determine weather or not it should be compiled staticly
     case "$line" in
         osx*|darwin*|x86_64h|*-apple-darwin)
             staticFlags="";;
@@ -17,6 +18,7 @@ grep -v '^#' arch.txt | while read -r line; do
             staticFlags="-static -static-libgcc -static-libstdc++";;
     esac
 
+    # Set compiler
     case "$line" in
         aarch64-apple-darwin|*AArch64)
             CXX="/usr/osxcross/bin/aarch64-apple-darwin20.4-clang++";;
@@ -26,8 +28,10 @@ grep -v '^#' arch.txt | while read -r line; do
             CXX="c++";;
     esac
 
+    $compileFlags="-O2 -lpthread -lm"
+
     echo "Compiling for $line"
-    docker run --rm -v $(pwd):/workdir -e CROSS_TRIPLE=$line nyancattw1/crossbuild $CXX src/main.cpp src/cubiomes/*.c -O2 $staticFlags -lpthread -lm -o out/main.$line
+    docker run --rm -v $(pwd):/workdir -e CROSS_TRIPLE=$line nyancattw1/crossbuild $CXX src/main.cpp src/cubiomes/*.c $staticFlags $compileFlags -o out/main.$line
     file out/main.$line
-    # ./crossCompilers/dockcross-$line bash -c '$CXX src/main.cpp src/cubiomes/*.c -O2 -static -static-libgcc -static-libstdc++ -lpthread -lm'
+
 done
