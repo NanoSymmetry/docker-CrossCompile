@@ -1,25 +1,31 @@
-#!/bin/env bash
+#!/bin/bash
 
-#Create pre-req directories
-if [[ ! -d "crossCompilers" ]]; then mkdir crossCompilers; fi
+# Create pre-req directories
 if [[ ! -d "src" ]]; then mkdir src; fi
+if [[ ! -d "out" ]]; then mkdir out; fi
 
-# For every arch wanted  
-
+# For every arch wanted
+rm -vf out/*
 grep -v '^#' arch.txt | while read -r line; do
-
     # Sanitize input by only allowing alpha-numeric charachters
-    sanitizedLine=${line//[^a-zA-Z0-9-]/}
+    line=${line//[^a-zA-Z0-9-]/}
 
-    #Make sure it doesnt exist before (re)making it
-    if [[ ! -f crossCompilers/dockcross-$sanitizedLine ]]; then
-        echo "Downloading helper script"
-        docker run --rm dockcross/$sanitizedLine > crossCompilers/dockcross-$sanitizedLine
-        chmod +x crossCompilers/dockcross-$sanitizedLine
-    fi
+    case "$line" in
+        osx*|darwin*|x86_64h|*-apple-darwin)
+            staticFlags="";;
+        *)
+            staticFlags="-static -static-libgcc -static-libstdc++";;
+    esac
 
-    # Actually compile the shit
+    case "$line" in
+        aarch64-apple-darwin|*AArch64)
+            CXX="/usr/osxcross/bin/aarch64-apple-darwin20.4-clang++";;
+        *)
+            CXX="c++";;
+    esac
+
     echo "Compiling for $line"
-    ./crossCompilers/dockcross-$line bash -c '$CXX src/main.cpp src/cubiomes/*.c -O2 -static -static-libgcc -static-libstdc++ -lpthread -lm'
-
+    docker run --rm -v $(pwd):/workdir -e CROSS_TRIPLE=$line nyancattw1/crossbuild $CXX src/main.cpp src/cubiomes/*.c -O2 $staticFlags -lpthread -lm -o out/main.$line
+    file out/main.$line
+    # ./crossCompilers/dockcross-$line bash -c '$CXX src/main.cpp src/cubiomes/*.c -O2 -static -static-libgcc -static-libstdc++ -lpthread -lm'
 done
