@@ -1,8 +1,2 @@
-# Ignore 
 src/
-crossCompilers/
-
-# Ignore build 
-a.out
-a.exe
-*.bin
+out/

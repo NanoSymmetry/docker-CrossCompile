@@ -1,9 +1,0 @@
-FROM --platform=$BUILDPLATFORM alpine AS build 
-RUN apk add g++
-COPY src src
-ARG TARGETPLATFORM BINARYNAME
-RUN g++ --target=$TARGETPLATFORM \
-    -o /out/$BINARYNAME /src
-
-FROM alpine
-COPY --from=build /out/$BINARYNAME /bin
