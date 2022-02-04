@@ -12,7 +12,7 @@
     - Available architechtures: https://github.com/e666666/crossbuild#supported-targets
 - `chmod +x crossCompile.sh`
 - `./crossCompile.sh`
-    - If needed to can add to the default flags buy adding them to the script call.
+    - If needed to can add to the default flags by adding them to the script call.
         - `./crossCompile.sh "-O3"`
         - `./crossCompile.sh "-falign-functions  -falign-jumps -falign-labels  -falign-loops"`
 
